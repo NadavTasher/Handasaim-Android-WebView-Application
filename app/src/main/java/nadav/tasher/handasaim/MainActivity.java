@@ -2,6 +2,7 @@ package nadav.tasher.handasaim;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,14 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+        // Setup Javascript theme interface
+        webView.addJavascriptInterface(new Object(){
+            @JavascriptInterface
+            public void colors(String colorTop, String colorBottom){
+                getWindow().setStatusBarColor(Color.parseColor(colorTop));
+                getWindow().setNavigationBarColor(Color.parseColor(colorBottom));
+            }
+        },"android");
         // Setup Javascript
         webView.getSettings().setJavaScriptEnabled(true);
         // Setup app cache
