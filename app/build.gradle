@@ -2,17 +2,18 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "nadav.tasher.handasaim"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 80
-        versionName "8.0"
+        versionCode 81
+        versionName "8.0.1"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
