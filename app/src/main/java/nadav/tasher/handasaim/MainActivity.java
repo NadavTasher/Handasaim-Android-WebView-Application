@@ -5,9 +5,8 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.*;
 
 import java.util.Timer;
@@ -46,7 +45,11 @@ public class MainActivity extends Activity {
                     public void run() {
                         try {
                             // Set recents color
-                            setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name), BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground), Color.parseColor(colorTop)));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                                setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name), R.drawable.ic_launcher_foreground, Color.parseColor(colorTop)));
+                            } else {
+                                setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name), BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground), Color.parseColor(colorTop)));
+                            }
                             // Set statusbar color
                             getWindow().setStatusBarColor(Color.parseColor(colorTop));
                             // Set navigationbar color
