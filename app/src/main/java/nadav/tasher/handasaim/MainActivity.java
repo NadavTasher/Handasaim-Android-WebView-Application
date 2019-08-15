@@ -1,7 +1,9 @@
 package nadav.tasher.handasaim;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,13 +38,25 @@ public class MainActivity extends Activity {
             }
         });
         // Setup Javascript theme interface
-        webView.addJavascriptInterface(new Object(){
+        webView.addJavascriptInterface(new Object() {
             @JavascriptInterface
-            public void colors(String colorTop, String colorBottom){
-                getWindow().setStatusBarColor(Color.parseColor(colorTop));
-                getWindow().setNavigationBarColor(Color.parseColor(colorBottom));
+            public void colors(final String colorTop, final String colorBottom) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            // Set recents color
+                            setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name), BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground), Color.parseColor(colorTop)));
+                            // Set statusbar color
+                            getWindow().setStatusBarColor(Color.parseColor(colorTop));
+                            // Set navigationbar color
+                            getWindow().setNavigationBarColor(Color.parseColor(colorBottom));
+                        } catch (Exception ignored) {
+                        }
+                    }
+                });
             }
-        },"android");
+        }, "android");
         // Setup Javascript
         webView.getSettings().setJavaScriptEnabled(true);
         // Setup app cache
