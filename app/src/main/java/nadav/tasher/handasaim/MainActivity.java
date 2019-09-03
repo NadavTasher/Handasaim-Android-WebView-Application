@@ -29,7 +29,8 @@ public class MainActivity extends Activity {
                 if (!request.getUrl().toString().startsWith(getString(R.string.app_url))) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(request.getUrl());
-                    startActivity(intent);
+                    if (intent.resolveActivity(getPackageManager()) != null)
+                        startActivity(intent);
                 } else {
                     view.loadUrl(request.getUrl().toString());
                 }
